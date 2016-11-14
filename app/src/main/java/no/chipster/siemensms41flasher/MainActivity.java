@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
 
        // USB.openDevice();
         Context context = getApplicationContext();
-        USB.context = context;
+        USB.context = (Context)this;
         CharSequence text = "Connecting!";
         int duration = Toast.LENGTH_SHORT;
 
