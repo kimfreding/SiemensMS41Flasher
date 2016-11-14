@@ -1,11 +1,18 @@
 package no.chipster.siemensms41flasher;
 
+import android.hardware.usb.UsbDevice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Handler;
 import android.util.Log;
 import android.content.Context;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.view.View;
+
+import java.io.IOException;
 import java.lang.Thread;
 import java.lang.Object;
 
@@ -23,6 +30,7 @@ public class usb extends AppCompatActivity{
         Thread mThread;
         //Context ctx;
         Context context = ApplicationContextProvider.getContext();
+        int devCount = 0;
 
         public void openDevice() {
 
@@ -40,8 +48,25 @@ public class usb extends AppCompatActivity{
                         }
                 }
 
+                UsbDevice device = (UsbDevice) getIntent().getParcelableExtra("USB");
+
+
+
+            try { ftD2xx = D2xxManager.getInstance(this);}
+            catch (D2xxManager.D2xxException ex)
+            {
+                Log.e("MainActivity",ex.toString());
+            }
+
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+            filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+
+                ftD2xx.addUsbDevice(device);
                 int devCount = 0;
-                devCount = ftD2xx.createDeviceInfoList(context);
+                devCount = ftD2xx.createDeviceInfoList(this);
+
+
 
                 //Log.d(TAG, "Device number : "+ Integer.toString(devCount));
 
@@ -53,10 +78,10 @@ public class usb extends AppCompatActivity{
                 }
 
                 if(flasher == null) {
-                        flasher = ftD2xx.openByIndex(context, 0);
+                        flasher = ftD2xx.openByIndex(this, 0);
                 } else {
                         synchronized (flasher) {
-                                flasher = ftD2xx.openByIndex(context, 0);
+                                flasher = ftD2xx.openByIndex(this, 0);
                         }
                 }
 

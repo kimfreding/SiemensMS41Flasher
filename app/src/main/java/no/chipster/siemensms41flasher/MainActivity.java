@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity{
+    private static final String TAG = "MainActivity";
     usb USB = new usb();
     Button Log;
 
