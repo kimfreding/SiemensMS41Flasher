@@ -22,14 +22,13 @@ import com.ftdi.j2xx.FT_Device;
 import static java.lang.Thread.*;
 
 public class usb extends AppCompatActivity{
+        public static Context context = null;
         public static D2xxManager ftD2xx = null;
         public FT_Device flasher;
 
         boolean mThreadIsStopped = true;
         Handler mHandler = new Handler();
         Thread mThread;
-        //Context ctx;
-        Context context = ApplicationContextProvider.getContext();
         int devCount = 0;
 
         public void openDevice() {
