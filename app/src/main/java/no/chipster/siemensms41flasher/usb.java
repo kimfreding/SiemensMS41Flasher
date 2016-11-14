@@ -47,10 +47,6 @@ public class usb extends AppCompatActivity{
                         }
                 }
 
-                UsbDevice device = (UsbDevice) getIntent().getParcelableExtra("USB");
-
-
-
             try { ftD2xx = D2xxManager.getInstance(this);}
             catch (D2xxManager.D2xxException ex)
             {
@@ -61,7 +57,6 @@ public class usb extends AppCompatActivity{
             filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
             filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
 
-                ftD2xx.addUsbDevice(device);
                 int devCount = 0;
                 devCount = ftD2xx.createDeviceInfoList(this);
 
